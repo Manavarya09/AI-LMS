@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduAI - AI-Powered Learning Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container flex items-center justify-between">
+            <div class="nav-brand">
+                <h2 class="logo">🎓 EduAI</h2>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#" onclick="navigateTo('home')" class="nav-link">Home</a>
+                <a href="#" onclick="navigateTo('courses')" class="nav-link">Courses</a>
+                <a href="#" onclick="navigateTo('about')" class="nav-link">About</a>
+                <div class="nav-buttons">
+                    <button class="btn btn--outline btn--sm" onclick="navigateTo('login')" id="loginBtn">Login</button>
+                    <button class="btn btn--primary btn--sm" onclick="navigateTo('register')" id="registerBtn">Register</button>
+                    <button class="btn btn--secondary btn--sm" onclick="toggleTheme()" id="themeToggle">🌙</button>
+                    <div class="user-menu hidden" id="userMenu">
+                        <img src="" alt="User Avatar" class="user-avatar" id="userAvatar">
+                        <span class="user-name" id="userName"></span>
+                        <button class="btn btn--outline btn--sm" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="app">
+        <!-- Landing Page -->
+        <div id="home" class="page active">
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Transform Your Learning with AI</h1>
+                        <p class="hero-subtitle">Experience personalized education with AI-powered doubt clarification, real-time collaboration, and gamified learning</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn--primary btn--lg" onclick="navigateTo('register')">Get Started Free</button>
+                            <button class="btn btn--outline btn--lg" onclick="navigateTo('courses')">Explore Courses</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="container">
+                    <h2 class="section-title">Why Choose EduAI?</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🤖</div>
+                            <h3>AI Doubt Clarification</h3>
+                            <p>Get instant answers to your questions with our advanced AI assistant</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">👥</div>
+                            <h3>Real-time Collaboration</h3>
+                            <p>Learn together with live sessions, virtual whiteboards, and group discussions</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🏆</div>
+                            <h3>Gamified Learning</h3>
+                            <p>Earn badges, maintain streaks, and compete on leaderboards</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3>Progress Analytics</h3>
+                            <p>Track your learning progress with detailed analytics and insights</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Authentication Pages -->
+        <div id="login" class="page auth-page">
+            <div class="auth-container">
+                <div class="auth-form">
+                    <h2>Login to EduAI</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full-width">Login</button>
+                    </form>
+                    <p class="auth-link">Don't have an account? <a href="#" onclick="navigateTo('register')">Register here</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="register" class="page auth-page">
+            <div class="auth-container">
+                <div class="auth-form">
+                    <h2>Join EduAI</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Role</label>
+                            <select class="form-control" required>
+                                <option value="">Select your role</option>
+                                <option value="student">Student</option>
+                                <option value="instructor">Instructor</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full-width">Register</button>
+                    </form>
+                    <p class="auth-link">Already have an account? <a href="#" onclick="navigateTo('login')">Login here</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="page">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1 id="dashboardTitle">Welcome back!</h1>
+                    <div class="dashboard-stats" id="dashboardStats"></div>
+                </div>
+                <div class="dashboard-content" id="dashboardContent"></div>
+            </div>
+        </div>
+
+        <!-- Courses Page -->
+        <div id="courses" class="page">
+            <div class="container">
+                <div class="courses-header">
+                    <h1>Course Catalog</h1>
+                    <div class="courses-filters">
+                        <input type="text" class="form-control" placeholder="Search courses..." id="courseSearch">
+                        <select class="form-control" id="difficultyFilter">
+                            <option value="">All Levels</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="courses-grid" id="coursesGrid"></div>
+            </div>
+        </div>
+
+        <!-- Course Detail Page -->
+        <div id="course-detail" class="page">
+            <div class="container">
+                <div id="courseDetailContent"></div>
+            </div>
+        </div>
+
+        <!-- AI Doubt Clarification -->
+        <div id="ai-doubt" class="page">
+            <div class="container">
+                <h1>AI Doubt Clarification</h1>
+                <div class="doubt-interface">
+                    <div class="doubt-form">
+                        <h3>Ask Your Question</h3>
+                        <form id="doubtForm">
+                            <div class="form-group">
+                                <label class="form-label">Subject</label>
+                                <select class="form-control" required>
+                                    <option value="">Select subject</option>
+                                    <option value="Machine Learning">Machine Learning</option>
+                                    <option value="React Development">React Development</option>
+                                    <option value="Data Science">Data Science</option>
+                                    <option value="Python">Python</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Your Question</label>
+                                <textarea class="form-control" rows="4" placeholder="Type your question here..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--primary">Ask AI Assistant</button>
+                        </form>
+                    </div>
+                    <div class="doubt-history">
+                        <h3>Recent Questions</h3>
+                        <div id="doubtHistory"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collaboration Hub -->
+        <div id="collaboration" class="page">
+            <div class="container">
+                <h1>Collaboration Hub</h1>
+                <div class="collaboration-interface">
+                    <div class="live-session">
+                        <h3>Live Session</h3>
+                        <div class="video-container">
+                            <div class="video-placeholder">📹 Video Session Active</div>
+                            <div class="session-controls">
+                                <button class="btn btn--secondary">Mute</button>
+                                <button class="btn btn--secondary">Camera</button>
+                                <button class="btn btn--secondary">Screen Share</button>
+                                <button class="btn btn--primary">End Session</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collaboration-tools">
+                        <div class="whiteboard">
+                            <h4>Virtual Whiteboard</h4>
+                            <canvas id="whiteboard" width="400" height="300"></canvas>
+                            <div class="whiteboard-tools">
+                                <button class="btn btn--sm">Pen</button>
+                                <button class="btn btn--sm">Eraser</button>
+                                <button class="btn btn--sm">Clear</button>
+                            </div>
+                        </div>
+                        <div class="chat">
+                            <h4>Group Chat</h4>
+                            <div class="chat-messages" id="chatMessages"></div>
+                            <div class="chat-input">
+                                <input type="text" class="form-control" placeholder="Type a message..." id="chatInput">
+                                <button class="btn btn--primary" onclick="sendMessage()">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gamification -->
+        <div id="gamification" class="page">
+            <div class="container">
+                <h1>Your Achievements</h1>
+                <div class="gamification-content">
+                    <div class="achievements-section">
+                        <h3>Badges & Achievements</h3>
+                        <div class="achievements-grid" id="achievementsGrid"></div>
+                    </div>
+                    <div class="leaderboard-section">
+                        <h3>Leaderboard</h3>
+                        <div class="leaderboard" id="leaderboard"></div>
+                    </div>
+                    <div class="progress-section">
+                        <h3>Your Progress</h3>
+                        <div class="progress-stats">
+                            <div class="stat-card">
+                                <h4>Current Level</h4>
+                                <div class="level-display">Level 12</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Learning Streak</h4>
+                                <div class="streak-display">🔥 15 days</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Total Points</h4>
+                                <div class="points-display">2,450 XP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div id="analytics" class="page">
+            <div class="container">
+                <h1>Learning Analytics</h1>
+                <div class="analytics-dashboard">
+                    <div class="analytics-cards">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Study Time This Week</h3>
+                                <div class="metric">24.5 hours</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Courses Completed</h3>
+                                <div class="metric">8</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Average Score</h3>
+                                <div class="metric">87%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="charts-section">
+                        <div class="chart-container">
+                            <h3>Weekly Progress</h3>
+                            <canvas id="progressChart" height="200"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Subject Performance</h3>
+                            <canvas id="performanceChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sidebar Navigation (for authenticated users) -->
+    <aside class="sidebar hidden" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <h3>Navigation</h3>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">×</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" onclick="navigateTo('dashboard')" class="sidebar-link">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="#" onclick="navigateTo('courses')" class="sidebar-link">
+                    <i class="fas fa-book"></i> Courses
+                </a>
+                <a href="#" onclick="navigateTo('ai-doubt')" class="sidebar-link">
+                    <i class="fas fa-robot"></i> AI Assistant
+                </a>
+                <a href="#" onclick="navigateTo('collaboration')" class="sidebar-link">
+                    <i class="fas fa-users"></i> Collaboration
+                </a>
+                <a href="#" onclick="navigateTo('gamification')" class="sidebar-link">
+                    <i class="fas fa-trophy"></i> Achievements
+                </a>
+                <a href="#" onclick="navigateTo('analytics')" class="sidebar-link">
+                    <i class="fas fa-chart-bar"></i> Analytics
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Notifications -->
+    <div class="notifications" id="notifications"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
